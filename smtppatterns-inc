@@ -1,0 +1,200 @@
+# os smtp patterns ajudam a manter a qualidade dos ips reagindo as respostas dos mxes de destino
+# esse arquivo deve ser atualizado regularmente com base na mudanca de comportamento dos provedores
+
+<smtp-pattern-list bol-smtpmsg>
+ reply /Too many messages/ mode=backoff,defer-queue
+ reply /Error: timeout exceeded/ mode=backoff
+ reply /queue file write error/ skip-mx
+ reply /Mail system error/ skip-mx
+ reply /blocked using spamhaus.mail.sys.intranet/ disable-source-ip,reenable-after=7d
+ reply /blocked.*spamhaus/ disable-source-ip,reenable-after=7d
+ reply /5.7.1 SPFBL BLOCKED/ disable-source-ip
+ reply /Envelope blocked - User Entry/ disable-source-ip
+ reply /poor reputation/ disable-source-ip,reenable-after=7d
+ reply /rejected due to spam URL in content/ disable-source-ip,reenable-after=15d
+ reply /Server access forbidden by your IP/ disable-source-ip
+ reply /spamrl.com/ disable-source-ip,reenable-after=15d
+ reply /www.symanteccloud.com\/troubleshooting/ disable-source-ip,reenable-after=1d
+ reply /possui baixa reputacao no Cloudmark Sender Intelligence/ disable-source-ip,reenable-after=45d
+ reply /Your access to submit messages to this e-mail system has been rejected/ disable-source-ip,reenable-after=45d
+ reply /is blacklisted/ disable-source-ip,reenable-after=7d
+ reply /uribl.dnsbl/ disable-source-ip,reenable-after=7d
+ reply /too many errors/ defer-queue
+ reply /ECONNREFUSED/ disable-source-ip,reenable-after=1h
+</smtp-pattern-list>
+
+
+<smtp-pattern-list gmail-smtpmsg>
+    reply /your IP address has been temporarily rate limited/ disable-source-ip,reenable-after=6h
+    reply /message is suspicious due to the very low reputation of the sending domain/ disable-source-ip,reenable-after=1d
+    reply /contact is receiving mail at a rate that prevents additional messages/ disable-source-ip,reenable-after=6h
+    reply /account that you tried to reach is over quota/ bounce-rcpt
+    #
+</smtp-pattern-list>
+
+
+<smtp-pattern-list yahoo-smtpmsg>
+    reply /\[GL01\] / mode=backoff,skip-mx,disable-source-ip,reenable-after=1h
+    reply /\[MC04\] / skip-mx,disable-source-ip,reenable-after=31m
+    reply /\[TS01\] / defer-queue
+    reply /\[TS02\] / defer-queue
+    reply /\[TS03\] / skip-mx,disable-source-ip,reenable-after=3d
+    reply /Resources temporarily unavailable/ mode=backoff,skip-mx
+    reply /because the ip is in Spamhaus/ disable-source-ip,reenable-after=3d
+    reply /\[BL21\]/ disable-source-ip,reenable-after=3d
+    reply /\[TSS04\]/ defer-queue
+    reply /\[IPTS04\]/ skip-mx,mode=backoff,disable-source-ip,reenable-after=1h
+</smtp-pattern-list>
+
+
+<smtp-pattern-list hotmail-smtpmsg>
+    reply /maximum number of messages/ mode=backoff,defer-queue
+    reply /Temporary server error/ skip-mx,mode=backoff
+    reply /RP-001/ mode=backoff,defer-queue
+    reply /421 PR/ defer-queue
+    reply /exceeded the connection limit/ mode=backoff,defer-queue
+    reply /exceeded the maximum number of connections/ mode=backoff,defer-queue
+    reply /Mail rejected by Windows Live Hotmail for policy reasons/ mode=backoff,disable-source-ip,reenable-after=1h
+    reply /mail.live.com\/mail\/troubleshooting.aspx/ mode=backoff,defer-queue
+    reply /Out of memory/ skip-mx
+    reply /SC-001/ disable-source-ip,skip-mx
+    reply /Please contact your Internet service provider since part of their network is on our block list/ skip-mx,disable-source-ip
+    reply /bad connection/ skip-mx
+    reply /blocked using FBLW15/ disable-source-ip,reenable-after=7d
+    reply /delist@messaging.microsoft.com/ disable-source-ip,reenable-after=7d
+    reply /OU-001/ disable-source-ip,reenable-after=5d
+    reply /We have limits for how many messages can be sent per hour and per day/ mode=backoff,defer-queue
+    reply /Server busy/ mode=backoff,defer-queue
+    reply /Message failed to be made redundant/ defer-queue
+    reply /Insufficient system resources/ defer-queue
+    reply /Organization queue quota exceeded/ skip-mx,disable-source-ip,reenable-after=1h
+</smtp-pattern-list>
+
+
+<smtp-pattern-list terra-smtpmsg>
+ reply /ESMTP server temporarily not available/ skip-mx,disable-source-ip,reenable-after=1h
+ reply /Too many messages/ skip-mx,mode=backoff
+ reply /Error: timeout exceeded/ mode=backoff
+ reply /queue file write error/ skip-mx
+ reply /Mail system error/ skip-mx
+ reply /blocked using spamhaus.mail.sys.intranet/ disable-source-ip,reenable-after=7d
+ reply /blocked.*spamhaus/ disable-source-ip,reenable-after=7d
+ reply /5.7.1 SPFBL BLOCKED/ disable-source-ip
+ reply /Envelope blocked - User Entry/ disable-source-ip
+ reply /poor reputation/ disable-source-ip,reenable-after=7d
+ reply /rejected due to spam URL in content/ disable-source-ip,reenable-after=15d
+ reply /Server access forbidden by your IP/ disable-source-ip
+ reply /spamrl.com/ disable-source-ip,reenable-after=15d
+ reply /www.symanteccloud.com\/troubleshooting/ disable-source-ip,reenable-after=1d
+ reply /possui baixa reputacao no Cloudmark Sender Intelligence/ disable-source-ip,reenable-after=45d
+ reply /Your access to submit messages to this e-mail system has been rejected/ disable-source-ip,reenable-after=45d
+ reply /is blacklisted/ disable-source-ip,reenable-after=7d
+ reply /uribl.dnsbl/ disable-source-ip,reenable-after=7d
+ reply /requested action aborted/ mode=backoff,defer-queue
+ reply /blocked using rp-blacklist/ skip-mx,disable-source-ip,reenable-after=1d
+ reply /sender rejected/ skip-mx,disable-source-ip,reenable-after=30m,mode=backoff
+</smtp-pattern-list>
+
+<smtp-pattern-list uol-smtpmsg>
+ reply /Poor network reputation due spamtraps hits or users complaints/ skip-mx,disable-source-ip,reenable-after=1d
+ reply /Too many messages/ mode=backoff,defer-queue
+ reply /Error: timeout exceeded/ mode=backoff
+ reply /queue file write error/ skip-mx
+ reply /Mail system error/ skip-mx
+ reply /blocked using spamhaus.mail.sys.intranet/ disable-source-ip,reenable-after=7d
+ reply /blocked.*spamhaus/ disable-source-ip,reenable-after=7d
+ reply /5.7.1 SPFBL BLOCKED/ disable-source-ip
+ reply /Envelope blocked - User Entry/ disable-source-ip
+ reply /poor reputation/ disable-source-ip,reenable-after=7d
+ reply /rejected due to spam URL in content/ disable-source-ip,reenable-after=15d
+ reply /Server access forbidden by your IP/ disable-source-ip
+ reply /spamrl.com/ disable-source-ip,reenable-after=15d
+ reply /www.symanteccloud.com\/troubleshooting/ disable-source-ip,reenable-after=1d
+ reply /possui baixa reputacao no Cloudmark Sender Intelligence/ disable-source-ip,reenable-after=45d
+ reply /Your access to submit messages to this e-mail system has been rejected/ disable-source-ip,reenable-after=45d
+ reply /is blacklisted/ disable-source-ip,reenable-after=7d
+ reply /uribl.dnsbl/ disable-source-ip,reenable-after=7d
+ reply /Error: too many errors/ defer-queue
+</smtp-pattern-list>
+
+<smtp-pattern-list oi-e-locaweb-smtpmsg>
+    # Generals
+    reply /try again later/ defer-queue
+    reply /too many errors by/ disable-source-ip,reenable-after=30m
+    reply /Connection declined at this time/ disable-source-ip,reenable-after=30m
+    reply /timeout exceeded/ defer-queue
+    #
+    # Anti RBL measuers
+    reply /spamrl.com/ disable-source-ip,reenable-after=15d #tempo definido no site dos caras
+    reply /5.7.1 SPFBL/ disable-source-ip,reenable-after=30d #tempo definido no site dos caras
+    reply /spfbl/ disable-source-ip,reenable-after=8d #tempo definido no site dos caras
+    reply /symanteccloud/ disable-source-ip,reenable-after=31d #nova blocklist cloud da symantec tempo estimado para diminuir reputacao
+    reply /possui baixa reputacao no Cloudmark Sender Intelligence/ disable-source-ip,reenable-after=31d #blocklist pesada tempo estimado para diminuir reputacao
+    reply /cloudmark/ disable-source-ip,reenable-after=31d #blocklist pesada. tempo estimado para diminuir reputacao
+    reply /Your access to submit messages to this e-mail system has been rejected/ disable-source-ip,reenable-after=45d #parece ser um filtro padrao de mercado appliance ou sistemas opensource tempo estimado para ver o que acontece
+    reply /is blacklisted/ disable-source-ip,reenable-after=8d #outra regra spamrl tempo definido no site dos caras
+    reply /Range de Ips bloqueado por envio de Spam/ disable-source-ip,reenable-after=30d #acho que foi uma mensagem que peguei em um provedor brasileiro
+    reply /IP Range Blocked due SPAM/ disable-source-ip
+    reply /has been rejected due to the sending MTA's poor reputation/ disable-source-ip,reenable-after=35d #mensagem com base na senderbase tempo estimado para diminuir reputacao
+    reply /Access denied, banned sending IP/ disable-source-ip,reenable-after=35d #parece ser um filtro padrao de mercado (appliance ou sistemas opensource tempo estimado para ver o que acontece
+    reply /sender.office.com/ disable-source-ip,reenable-after=35d #blocklist microsoft para empresarial esse pode pedir delist no site
+    reply /553 Message filtered/ disable-source-ip,reenable-after=35d #outra mensagem blocklist cloud da symantec tempo estimado para diminuir reputacao
+    reply /uribl.dnsbl/ disable-source-ip,reenable-after=2d
+    reply /If this is not spam contact abuse team/ mode=backoff
+    reply /IP BLACKLISTED/ disable-source-ip,reenable-after=14d
+    reply /421 Connection declined at this time/ skip-mx,disable-source-ip,reenable-after=45m
+    reply /No more transactions allowed/ skip-mx,disable-source-ip,reenable-after=1h
+    reply /5.7.1 Spam message rejected/ mode=backoff
+    #reply /Too many complaints from domain/ skip-mx,disable-source-ip,reenable-after=2h 
+    reply /Too many complaints from domain/ defer-queue
+    reply /Insufficient system storage/ defer-queue
+</smtp-pattern-list>
+
+<smtp-pattern-list common-smtpmsg>
+    reply /Our system has detected an unusual rate of unsolicited mail/ disable-source-ip,reenable-after=90m
+    reply /timed out while receiving the initial server greeting/ skip-mx
+    reply /too many/ mode=backoff
+    reply /Exceeded allowable connection time/ mode=backoff
+    reply /Connection rate limit exceeded/ mode=backoff
+    reply /refused your connection/ mode=backoff
+    reply /try again later/ mode=backoff
+    reply /try later/ mode=backoff
+    reply /550 RBL/ mode=backoff
+    reply /TDC internal RBL/ disable-source-ip,skip-mx
+    reply /connection refused/ mode=backoff
+    reply /spamhaus/ disable-source-ip,reenable-after=72h
+    reply /Message Rejected/ mode=backoff
+    reply /refused by antispam/ mode=backoff
+    reply /Service not available/ mode=backoff
+    reply /currently blocked/ mode=backoff
+    reply /locally blacklisted/ mode=backoff
+    reply /not currently accepting mail from your ip/ mode=backoff
+    reply /421.*closing connection/ mode=backoff
+    reply /421.*Lost connection/ mode=backoff
+    reply /476 connections from your host are denied/ mode=backoff
+    reply /421 Connection cannot be established/ mode=backoff
+    reply /421 temporary envelope failure/ mode=backoff
+    reply /421 4.4.2 Timeout while waiting for command/ mode=backoff
+    reply /450 Requested action aborted/ mode=backoff
+    reply /550 Access denied/ mode=backoff
+    reply /exceeded the rate limit/ mode=backoff
+    reply /421rlynw/ mode=backoff
+    reply /permanently deferred/ mode=backoff
+    reply /\d+\.\d+\.\d+\.\d+ blocked/ mode=backoff
+    reply /www\.spamcop\.net\/bl\.shtml/ disable-source-ip,skip-mx
+    reply /generating high volumes of.* complaints from AOL/    mode=backoff
+    reply /Excessive unknown recipients - possible Open Relay/  mode=backoff
+    reply /^421 .* too many errors/                             mode=backoff
+    reply /blocked.*spamhaus/                                   disable-source-ip,reenable-after=72h
+    reply /451 Rejected/                                        mode=backoff
+    reply /Trend Micro Email Reputation Service/  disable-source-ip,reenable-after=72h
+    reply /incoming connections exceeded/ mode=backoff
+    reply /numero maximo de emails enviados por remetente/ mode=backoff,disable-source-ip,reenable-after=70m
+    reply /voce atingiu o limite maximo permitido/ mode=backoff,disable-source-ip,reenable-after=70m
+    reply /Client host rejected: Blocked SPAMMER domain. If you are not a spammer .*\.gov.br/ disable-source-ip
+    reply /Our system has detected that this message is likely unsolicited mail/ disable-source-ip,reenable-after=2d
+    reply /Denied by policy/ disable-source-ip
+    reply /Your access to this mail system has been rejected due to the sending MTA's poor reputation/ disable-source-ip,reenable-after=7d
+    reply /4.2.1 mailbox temporarily disabled/ skip-mx
+    reply /All server ports are busy/ skip-mx,mode=backoff
+</smtp-pattern-list>
