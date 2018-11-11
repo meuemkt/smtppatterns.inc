@@ -25,10 +25,11 @@
 
 
 <smtp-pattern-list gmail-smtpmsg>
-    reply /your IP address has been temporarily rate limited/ disable-source-ip,reenable-after=6h
+    reply /your IP address has been temporarily rate limited/ disable-source-ip,reenable-after=1h,mode=backoff
     reply /message is suspicious due to the very low reputation of the sending domain/ disable-source-ip,reenable-after=1d
     reply /contact is receiving mail at a rate that prevents additional messages/ disable-source-ip,reenable-after=6h
     reply /account that you tried to reach is over quota/ bounce-rcpt
+    reply /this message is likely unsolicited mail/ disable-source-ip,reenable-after=6h
     #
 </smtp-pattern-list>
 
