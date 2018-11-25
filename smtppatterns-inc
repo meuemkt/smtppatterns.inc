@@ -30,6 +30,7 @@
     reply /contact is receiving mail at a rate that prevents additional messages/ disable-source-ip,reenable-after=6h
     reply /account that you tried to reach is over quota/ bounce-rcpt
     reply /this message is likely unsolicited mail/ disable-source-ip,reenable-after=6h
+    reply /very low reputation of the sending IP address/ disable-source-ip,reenable-after=12h
     #
 </smtp-pattern-list>
 
