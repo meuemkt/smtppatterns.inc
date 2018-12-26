@@ -125,6 +125,8 @@
     reply /too many errors by/ disable-source-ip,reenable-after=30m
     reply /Connection declined at this time/ disable-source-ip,reenable-after=30m
     reply /timeout exceeded/ defer-queue
+    reply /451 4.5.3/ skip-mx,mode=backoff
+    reply /451 4.2.1 mailbox temporarily disabled/ bounce-rcpt
     #
     # Anti RBL measuers
     reply /spamrl.com/ disable-source-ip,reenable-after=15d #tempo definido no site dos caras
